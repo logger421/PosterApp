@@ -13,8 +13,4 @@ public class HomeController {
     public String homePage(Model model) {
         return "home";
     }
-
-    public String loginPage(Model model) {
-        return "login";
-    }
 }
