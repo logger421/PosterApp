@@ -11,11 +11,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    private final String[] publicRoutes = new String[]{"/login", "/register"};
+    private final String[] privateGlobalRoutes = new String[]{"/home/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(config -> config
+                        .requestMatchers(publicRoutes).permitAll()
+                        .requestMatchers(privateGlobalRoutes).hasAnyRole("ADMIN", "USER")
                         .anyRequest()
                         .authenticated())
                 .formLogin(form -> form
@@ -32,7 +36,7 @@ public class SecurityConfig {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password("{noop}p123")
-                .roles("EMPLOYEE")
+                .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(user1);
     }
