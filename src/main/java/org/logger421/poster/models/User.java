@@ -1,15 +1,16 @@
 package org.logger421.poster.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "user")
-@NoArgsConstructor @Getter @Setter
+@Table(name = "user_class")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter @Setter @ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,6 @@ public class User {
     private String address;
     @Column(nullable = false)
     private String city;
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "author")
     private List<Post> posts;
 }
