@@ -3,13 +3,16 @@ package org.logger421.poster.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Data
-@Table(name = "post")
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -19,4 +22,5 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_class_id", nullable = false)
     private User author;
+    private Date createdAt;
 }
