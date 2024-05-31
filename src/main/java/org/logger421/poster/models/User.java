@@ -2,6 +2,8 @@ package org.logger421.poster.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
     @OneToMany(mappedBy = "author")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Post> posts;
     private Role role;
 }

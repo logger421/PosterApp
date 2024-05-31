@@ -1,6 +1,15 @@
 package org.logger421.poster.dto;
 
-import org.logger421.poster.models.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record PostDTO(User author, String title, String content) {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PostDTO {
+    private String author;
+    private String content;
 }
