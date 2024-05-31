@@ -36,9 +36,9 @@ public class DataLoader implements ApplicationRunner {
             userRepository.save(adminUser);
         }
         if(postRepository.count() == 0) {
-            postRepository.save(new Post(null, "Example content1", user, new Timestamp(System.currentTimeMillis())));
-            postRepository.save(new Post(null, "Example content2", user, new Timestamp(System.currentTimeMillis())));
-            postRepository.save(new Post(null, "Example content3", user, new Timestamp(System.currentTimeMillis())));
+            postRepository.save(new Post(null, "Example content1", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
+            postRepository.save(new Post(null, "Example content2", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
+            postRepository.save(new Post(null, "Example content3", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
         }
     }
 }
