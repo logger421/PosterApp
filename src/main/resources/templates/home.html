@@ -44,87 +44,69 @@
 
 <div class="container-fluid">
     <div class="row bg-light">
-        <div class="col-2 border">
-            <img src="/icons/left_space.png" class="img-fluid" alt="Some Alt">
+        <div class="col-2">
+            <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
         </div>
         <div class="col-8 my-1">
-            <div class="card bg-light gap-3">
-                <div class="card-body">
-                <h5 class="card-title">Add new post</h5>
-                    <p class="card-subtitle">Subtitle</p>
-                </div>
+            <div th:if="${param.postCreated}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Post added!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="card rounded bg-light bg-gradient shadow gap-3 my-3">
-                <div class="card-body">
-                    <h5 class="card-title"><b>Example Title</b></h5>
-                    <div class="card-subtitle"><b>Author:</b> John Smith <b>Created: </b>2024.05.15::20:30</div>
-                    <div class="card-text">Some text</div>
-                    <div class="card-footer">
-                        <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
-                            <div class="btn-group me-2" role="group" aria-label="Reactions group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio1"><i class="fa-regular fa-thumbs-up"></i></label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-secondary" for="btnradio2"><i class="fa-regular fa-thumbs-down"></i></label>
-                            </div>
-                            <div class="input-group">
-                                <div class="input-group-text" id="btnGroupAddon"><i class="fa-regular fa-comment"></i></div>
-                                <input type="text" class="form-control" placeholder="Enter comment here" aria-label="Input group example" aria-describedby="btnGroupAddon">
-                                <button type="button" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i></button>
-                            </div>
+            <form class="shadow" action="#" th:object="${post}" th:action="@{/post/new}" method="POST">
+                <div class="card bg-light gap-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Create new post:</h5>
+                        <div class="card-text form-floating">
+                            <textarea class="form-control" style="height: 6em" placeholder="Write something" id="content" th:field="*{content}"></textarea>
+                            <label for="content">Write something</label>
+                        </div>
+                        <div class="card-footer pt-1">
+                            <button class="btn btn-primary" type="submit">Add <i class="fa-regular fa-paper-plane"></i></button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card rounded bg-light bg-gradient shadow gap-3 my-3">
-                <div class="card-body">
-                    <h5 class="card-title"><b>Example Title</b></h5>
-                    <div class="card-subtitle"><b>Author:</b> John Smith <b>Created: </b>2024.05.15::20:30</div>
-                    <div class="card-text">Some text</div>
+            </form>
+            <div class="card rounded bg-light bg-gradient shadow-sm gap-3 my-3">
+                <div class="card-body" th:each="p : ${posts}">
+                    <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
+                    <div class="card-subtitle"><b>Created: </b><em th:text="${p.createdAt}"></em></div>
+                    <div class="card-text" th:text="${p.content}"></div>
                     <div class="card-footer">
                         <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
                             <div class="btn-group me-2" role="group" aria-label="Reactions group">
-                                <input type="radio" class="btn-check" name="btnradio2" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio3"><i class="fa-regular fa-thumbs-up"></i></label>
-
-                                <input type="radio" class="btn-check" name="btnradio2" id="btnradio4" autocomplete="off">
-                                <label class="btn btn-outline-secondary" for="btnradio4"><i class="fa-regular fa-thumbs-down"></i></label>
+                                <input type="radio" class="btn-check" th:name="'radio_' + ${p.id}" th:id="'like_' + ${p.id}" autocomplete="off">
+                                <label th:onclick="handleAddLike([[${p.id}]])" class="btn btn-outline-primary" th:for="'like_' + ${p.id}"><i class="fa-regular fa-thumbs-up"></i></label>
+                                <input th:onclick="handleRemoveLike([[${p.id}]])" type="radio" class="btn-check" th:name="'radio_' + ${p.id}" th:id="'dislike_' + ${p.id}" autocomplete="off">
+                                <label class="btn btn-outline-secondary" th:for="'dislike_' + ${p.id}"><i class="fa-regular fa-thumbs-down"></i></label>
                             </div>
                             <div class="input-group">
-                                <div class="input-group-text"><i class="fa-regular fa-comment"></i></div>
+                                <button type="button" class="btn btn-secondary" th:id="'comments_' + ${p.id}"><i class="fa-regular fa-comment"></i></button>
                                 <input type="text" class="form-control" placeholder="Enter comment here" aria-label="Input group example" aria-describedby="btnGroupAddon">
-                                <button type="button" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i></button>
+                                <button th:onclick="handleRemoveLike([[${p.id}]])" type="button" class="btn btn-primary" th:id="'comment_' + ${p.id}"><i class="fa-regular fa-paper-plane"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-2 border">
-            <img src="/icons/right_space.png" class="img-fluid" alt="Some Alt">
+        <div class="col-2">
+            <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
         </div>
     </div>
 </div>
 
 <!-- Footer -->
 <footer class="bg-link ">
-    <!-- Grid container -->
-    <div class="container p-4">
-    </div>
-    <!-- Grid container -->
-    <!-- Copyright -->
     <div class="text-center p-3 bg-light">
         © 2020 Copyright:
         <a class="text-dark" href="https://localhost:8080/home">www.poster.com</a>
     </div>
-    <!-- Copyright -->
 </footer>
-<!-- Footer -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous">
 </script>
 <script src="https://kit.fontawesome.com/b53d8df8be.js" crossorigin="anonymous"></script>
+<script src="/script/handlers.js" type="module"></script>
 </body>
 </html>
