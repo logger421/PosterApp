@@ -15,9 +15,9 @@ import static jakarta.servlet.DispatcherType.FORWARD;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final String[] publicPages = new String[]{"/**", "/svg/**", "/h2-console/**"};
+    private final String[] publicPages = new String[]{"/**", "/svg/**"};
     private final String[] privatePages = new String[]{"/admin/**", "/home/**"};
-    private final String[] noCSRFProtectionPages = new String[]{"/h2-console/**"};
+    private final String[] noCSRFProtectionPages = new String[]{};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,6 +41,6 @@ public class SecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(8);
     }
 }
