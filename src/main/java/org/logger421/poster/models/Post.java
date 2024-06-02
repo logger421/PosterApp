@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     private Long id;
     private String content;
     @ManyToOne(fetch = FetchType.LAZY)

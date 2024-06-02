@@ -28,16 +28,16 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        User user = new User(252L, "user", bcryptEncoder.encode("user"), "user@user.com", new ArrayList<>(), Role.USER);
+        User user = new User(1L, "user", bcryptEncoder.encode("user"), "user@user.com", new ArrayList<>(), Role.USER);
         User adminUser = new User(2L, "admin", bcryptEncoder.encode("admin"), "admin@admin.com", new ArrayList<>(), Role.ADMIN);
         if (userRepository.count() == 0) {
             userRepository.save(user);
             userRepository.save(adminUser);
         }
         if (postRepository.count() == 0) {
-            postRepository.save(new Post(null, "Example content1", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
-            postRepository.save(new Post(null, "Example content2", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
-            postRepository.save(new Post(null, "Example content3", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
+            postRepository.save(new Post(null, "Example content4", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
+            postRepository.save(new Post(null, "Example content5", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
+            postRepository.save(new Post(null, "Example content6", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new HashSet<>()));
         }
     }
 }

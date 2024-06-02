@@ -18,7 +18,7 @@ import java.util.Date;
 @ToString
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     private Long id;
     private Long postId;
     private Long userId;

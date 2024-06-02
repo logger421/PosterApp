@@ -5,6 +5,7 @@ import org.logger421.poster.dto.PostDTO;
 import org.logger421.poster.models.Comment;
 import org.logger421.poster.models.Post;
 import org.logger421.poster.models.User;
+import org.logger421.poster.repositiories.CommentRepository;
 import org.logger421.poster.repositiories.PostRepository;
 import org.logger421.poster.repositiories.UserRepository;
 import org.logger421.poster.requests.PostRequestAction;
@@ -20,10 +21,12 @@ import java.util.Set;
 public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
-    public PostService(UserRepository userRepository, PostRepository postRepository) {
+    public PostService(UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     public void createPost(PostDTO post) {
@@ -64,7 +67,7 @@ public class PostService {
     }
 
     @Transactional
-    public boolean addComment(long postId, String comment, String userEmail) {
+    public Comment addComment(long postId, String comment, String userEmail) {
         Post post = postRepository.getPostById(postId);
         User user = userRepository.findByEmail(userEmail);
         Comment newComment = Comment
@@ -75,9 +78,10 @@ public class PostService {
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
         Set<Comment> comments = post.getComments();
-        boolean added = comments.add(newComment);
+        comments.add(newComment);
         post.setComments(comments);
         postRepository.save(post);
-        return added;
+        Comment saved = commentRepository.save(newComment);
+        return saved;
     }
 }
