@@ -8,14 +8,12 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.List;
 
 @Entity
-@Data
 @Table(name = "user_class")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Setter
-@ToString
 public class User {
     @Id
     @GeneratedValue
@@ -29,5 +27,7 @@ public class User {
     @OneToMany(mappedBy = "author")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Post> posts;
+    @ManyToMany
+    private List<Post> likedPosts;
     private Role role;
 }

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Slf4j
@@ -58,7 +59,7 @@ public class PostService {
             }
             case REMOVE_LIKE -> {
                 Set<User> likes = post.getLikes();
-                result = likes.removeIf(u -> u.getId() == user.getId());
+                result = likes.removeIf(u -> Objects.equals(u.getId(), user.getId()));
                 post.setLikes(likes);
                 postRepository.save(post);
             }
@@ -70,18 +71,23 @@ public class PostService {
     public Comment addComment(long postId, String comment, String userEmail) {
         Post post = postRepository.getPostById(postId);
         User user = userRepository.findByEmail(userEmail);
-        Comment newComment = Comment
-                .builder()
+
+        Comment newComment = Comment.builder()
                 .comment(comment)
-                .postId(postId)
+                .post(post)
                 .userId(user.getId())
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
-        Set<Comment> comments = post.getComments();
+
+        List<Comment> comments = post.getComments();
         comments.add(newComment);
         post.setComments(comments);
         postRepository.save(post);
-        Comment saved = commentRepository.save(newComment);
-        return saved;
+
+        return commentRepository.save(newComment);
+    }
+
+    public List<Comment> getComments(long id) {
+        return commentRepository.findCommentsByPostId(id);
     }
 }

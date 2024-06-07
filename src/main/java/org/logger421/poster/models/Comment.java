@@ -1,26 +1,23 @@
 package org.logger421.poster.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Comment {
     @Id
     @GeneratedValue
     private Long id;
-    private Long postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
     private Long userId;
     private String comment;
     private Date createdAt;

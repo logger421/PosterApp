@@ -1,4 +1,4 @@
-import {addLike, dislike, addComment} from "./actions.js";
+import {addLike, dislike, addComment, viewComments} from "./actions.js";
 
 async function handleAddLike(postId) {
     await addLike(postId);
@@ -15,6 +15,12 @@ async function handleAddComment(postId) {
     window.window.href = '/'
 }
 
+async function handleViewComments(postId) {
+    await viewComments(postId);
+    window.window.href = '/'
+}
+
 window.handleAddLike = handleAddLike;
 window.handleRemoveLike = handleRemoveLike;
 window.handleAddComment = handleAddComment;
+window.handleViewComments = handleViewComments;

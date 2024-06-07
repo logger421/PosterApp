@@ -1,6 +1,7 @@
 package org.logger421.poster.api;
 
 import lombok.extern.slf4j.Slf4j;
+import org.logger421.poster.dto.CommentDTO;
 import org.logger421.poster.models.Comment;
 import org.logger421.poster.requests.AddCommentRequest;
 import org.logger421.poster.requests.PostRequestAction;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -31,8 +34,28 @@ public record ProductRestController(PostService postService, UserService userSer
     }
 
     @PostMapping("/addComment")
-    public ResponseEntity<HttpStatus> addComment(@RequestBody AddCommentRequest request, Authentication auth) {
+    public ResponseEntity<Comment> addComment(@RequestBody AddCommentRequest request, Authentication auth) {
         Comment added = postService.addComment(request.postId(), request.comment(), auth.getName());
-        return added == null ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        log.info("Added comment: {}", added);
+        return added != null ? ResponseEntity.ok(added) : ResponseEntity.internalServerError().build();
+    }
+
+    @GetMapping("/view/comments/{postId}")
+    public List<CommentDTO> getComments(@PathVariable @NonNull String postId) {
+        List<Comment> comments = postService.getComments(Long.parseLong(postId));
+
+        return comments
+                .stream()
+                .map(
+                        comment ->
+                                CommentDTO
+                                        .builder()
+                                        .userId(comment.getUserId())
+                                        .postId(comment.getPost().getId())
+                                        .comment(comment.getComment())
+                                        .createdAt(comment.getCreatedAt())
+                                        .build()
+                )
+                .toList();
     }
 }

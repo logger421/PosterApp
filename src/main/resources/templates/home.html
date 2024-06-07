@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Poster LHome</title>
+    <title>Poster</title>
     <meta name="description" content="Home">
     <meta name="keywords" content="html Poster template">
     <meta name="_csrf" th:content="${_csrf.token}">
@@ -38,10 +38,12 @@
             <form class="d-flex">
                 <div class="input-group">
                     <button class="btn btn-outline-success" type="button" id="inputGroupAddon">Search</button>
-                    <input type="search" class="form-control" id="inputGroup" aria-describedby="inputGroupFileAddon04" aria-label="Upload" placeholder="Search for friends!">
+                    <input type="search" class="form-control" id="inputGroup" aria-describedby="inputGroupFileAddon04"
+                           aria-label="Upload" placeholder="Search for friends!">
                 </div>
             </form>
-            <form action="#" th:action="@{/logout}" method="POST"><input class="btn btn-primary m-1" type="submit" value="Logout"/></form>
+            <form action="#" th:action="@{/logout}" method="POST"><input class="btn btn-primary m-1" type="submit"
+                                                                         value="Logout"/></form>
         </div>
     </div>
 </nav>
@@ -51,42 +53,77 @@
         <div class="col-2">
             <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
         </div>
-        <div class="col-8 my-1">
+        <div class="col-8 bg-info">
             <div th:if="${param.postCreated}" class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Post added!</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <form class="shadow" action="#" th:object="${post}" th:action="@{/post/new}" method="POST">
-                <div class="card bg-light gap-3">
+            <form class="shadow my-2" action="#" th:object="${post}" th:action="@{/post/new}" method="POST">
+                <div class="card gap-3">
                     <div class="card-body">
                         <h5 class="card-title">Create new post:</h5>
                         <div class="card-text form-floating">
-                            <textarea class="form-control" style="height: 6em" placeholder="Write something" id="content" th:field="*{content}"></textarea>
+                            <textarea class="form-control" style="height: 6em" placeholder="Write something"
+                                      id="content" th:field="*{content}"></textarea>
                             <label for="content">Write something</label>
                         </div>
                         <div class="card-footer pt-1">
-                            <button class="btn btn-primary" type="submit">Add <i class="fa-regular fa-paper-plane"></i></button>
+                            <button class="btn btn-primary" type="submit">Add <i class="fa-regular fa-paper-plane"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </form>
-            <div class="card rounded bg-light bg-gradient shadow-sm gap-3 my-3">
-                <div class="card-body" th:each="p : ${posts}">
-                    <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
-                    <div class="card-subtitle"><b>Created: </b><em th:text="${p.createdAt}"></em></div>
-                    <div class="card-text" th:text="${p.content}"></div>
-                    <div class="card-footer">
-                        <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
-                            <div class="btn-group me-2" role="group" aria-label="Reactions group">
-                                <input type="radio" class="btn-check" th:name="'radio_' + ${p.id}" th:id="'like_' + ${p.id}" autocomplete="off">
-                                <label th:onclick="handleAddLike([[${p.id}]])" class="btn btn-outline-primary" th:for="'like_' + ${p.id}"><i class="fa-regular fa-thumbs-up"></i></label>
-                                <input th:onclick="handleRemoveLike([[${p.id}]])" type="radio" class="btn-check" th:name="'radio_' + ${p.id}" th:id="'dislike_' + ${p.id}" autocomplete="off">
-                                <label class="btn btn-outline-secondary" th:for="'dislike_' + ${p.id}"><i class="fa-regular fa-thumbs-down"></i></label>
+            <div id="posts">
+                <div class="card bg-light bg-gradient shadow-sm gap-3 my-3" th:each="p : ${posts}">
+                    <div class="card-body">
+                        <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
+                        <div class="card-subtitle"><b>Created: </b><em th:text="${p.createdAt}"></em></div>
+                        <div class="card-text" th:text="${p.content}"></div>
+                        <div class="card-footer">
+                            <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
+                                <div class="btn-group me-2" role="group" aria-label="Reactions group">
+                                    <input type="radio" class="btn-check" th:name="'radio_' + ${p.id}"
+                                           th:id="'like_' + ${p.id}" autocomplete="off">
+                                    <label th:onclick="handleAddLike([[${p.id}]])" class="btn btn-outline-primary"
+                                           th:for="'like_' + ${p.id}"><i class="fa-regular fa-thumbs-up"></i></label>
+                                    <input th:onclick="handleRemoveLike([[${p.id}]])" type="radio" class="btn-check"
+                                           th:name="'radio_' + ${p.id}" th:id="'dislike_' + ${p.id}" autocomplete="off">
+                                    <label class="btn btn-outline-secondary" th:for="'dislike_' + ${p.id}"><i
+                                            class="fa-regular fa-thumbs-down"></i></label>
+                                </div>
+                                <div class="input-group">
+                                    <button th:onclick="handleViewComments([[${p.id}]])" type="button"
+                                            class="btn btn-secondary" data-bs-toggle="modal"
+                                            th:data-bs-target="'#commentsModal' + ${p.id}"><i
+                                            class="fa-regular fa-comment"></i></button>
+                                    <input type="text" class="form-control" th:id="'comment_v_' + ${p.id}"
+                                           placeholder="Enter comment here" aria-label="Input group example"
+                                           aria-describedby="btnGroupAddon">
+                                    <button th:onclick="handleAddComment([[${p.id}]])" type="button"
+                                            class="btn btn-primary" th:id="'comment_' + ${p.id}"><i
+                                            class="fa-regular fa-paper-plane"></i></button>
+                                </div>
                             </div>
-                            <div class="input-group">
-                                <button type="button" class="btn btn-secondary" th:id="'comments_' + ${p.id}"><i class="fa-regular fa-comment"></i></button>
-                                <input type="text" class="form-control" th:id="'comment_v_' + ${p.id}" placeholder="Enter comment here" aria-label="Input group example" aria-describedby="btnGroupAddon">
-                                <button th:onclick="handleAddComment([[${p.id}]])" type="button" class="btn btn-primary" th:id="'comment_' + ${p.id}"><i class="fa-regular fa-paper-plane"></i></button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="'commentsModal' + ${p.id}" tabindex="-1"
+                             aria-labelledby="commentsModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="Comments"></h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" th:id="'comments_' + ${p.id}">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
