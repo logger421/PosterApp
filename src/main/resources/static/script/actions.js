@@ -45,7 +45,6 @@ export async function viewComments(id) {
         method: 'GET'
     })
     const commentsBody = await response.json();
-    console.log(JSON.stringify(commentsBody));
     let comments = document.getElementById('comments_' + id);
 
     comments.innerHTML = '';

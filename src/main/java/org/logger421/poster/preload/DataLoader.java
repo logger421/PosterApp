@@ -28,9 +28,9 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        User user1 = new User(1L, "user1", bcryptEncoder.encode("user"), "user1@user.com", new ArrayList<>(), new ArrayList<>(), Role.USER);
-        User user2 = new User(2L, "user2", bcryptEncoder.encode("user"), "user2@user.com", new ArrayList<>(), new ArrayList<>(), Role.USER);
-        User adminUser = new User(3L, "admin", bcryptEncoder.encode("admin"), "admin@admin.com", new ArrayList<>(), new ArrayList<>(), Role.ADMIN);
+        User user1 = new User(1L, "user1", bcryptEncoder.encode("user"), "user1@user.com", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Role.USER);
+        User user2 = new User(2L, "user2", bcryptEncoder.encode("user"), "user2@user.com", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Role.USER);
+        User adminUser = new User(3L, "admin", bcryptEncoder.encode("admin"), "admin@admin.com", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), Role.ADMIN);
         if (userRepository.count() == 0) {
             userRepository.save(user1);
             userRepository.save(user2);

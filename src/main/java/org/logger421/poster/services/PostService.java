@@ -8,7 +8,7 @@ import org.logger421.poster.models.User;
 import org.logger421.poster.repositiories.CommentRepository;
 import org.logger421.poster.repositiories.PostRepository;
 import org.logger421.poster.repositiories.UserRepository;
-import org.logger421.poster.requests.PostRequestAction;
+import org.logger421.poster.actions.PostRequestAction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +31,7 @@ public class PostService {
     }
 
     public void createPost(PostDTO post) {
-        User byUsername = userRepository.findByEmail(post.getAuthor());
+        User byUsername = userRepository.findByUsername(post.getAuthor());
         postRepository.save(
                 Post
                         .builder()
@@ -41,14 +41,11 @@ public class PostService {
                         .build());
     }
 
-    public List<Post> getPosts() {
-        return postRepository.findAll();
-    }
-
     @Transactional
-    public boolean editPost(long postId, String userEmail, PostRequestAction action) {
+    public boolean editPost(long postId, String userName, PostRequestAction action) {
         Post post = postRepository.getPostById(postId);
-        User user = userRepository.findByEmail(userEmail);
+        User user = userRepository.findByUsername(userName);
+
         boolean result = false;
         switch (action) {
             case ADD_LIKE -> {
@@ -67,15 +64,24 @@ public class PostService {
         return result;
     }
 
+    public List<Post> getPosts() {
+        return postRepository.findAll();
+    }
+
+    public List<Post> getUserPosts(String userName) {
+        User user = userRepository.findByUsername(userName);
+        return postRepository.getByAuthor(user);
+    }
+
     @Transactional
-    public Comment addComment(long postId, String comment, String userEmail) {
+    public Comment addComment(long postId, String comment, String userName) {
         Post post = postRepository.getPostById(postId);
-        User user = userRepository.findByEmail(userEmail);
+        User user = userRepository.findByUsername(userName);
 
         Comment newComment = Comment.builder()
                 .comment(comment)
                 .post(post)
-                .userId(user.getId())
+                .author(user)
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
 

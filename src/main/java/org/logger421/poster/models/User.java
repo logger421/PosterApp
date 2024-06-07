@@ -29,5 +29,8 @@ public class User {
     private List<Post> posts;
     @ManyToMany
     private List<Post> likedPosts;
+    @OneToMany(mappedBy = "author")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Comment> comments;
     private Role role;
 }

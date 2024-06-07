@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 public class CommentDTO {
     private Long postId;
-    private Long userId;
+    private String userName;
     private String comment;
     private Date createdAt;
 }

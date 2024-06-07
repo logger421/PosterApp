@@ -18,7 +18,7 @@ public record PosterUserDetailsService(UserRepository userRepository) implements
                 Optional.ofNullable(userRepository.findByUsername(username))
                         .orElseThrow(() -> new UsernameNotFoundException(username));
         return User
-                .withUsername(user.getEmail())
+                .withUsername(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole().name())
                 .build();
