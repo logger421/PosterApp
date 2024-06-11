@@ -1,20 +1,41 @@
 package org.logger421.poster.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+import org.logger421.poster.models.User;
+import org.logger421.poster.requests.UploadImagePayload;
 import org.logger421.poster.services.PostService;
 import org.logger421.poster.services.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Controller
 @RequestMapping("/dashboard")
 public record DashboardController(PostService postService, UserService userService) {
 
     @GetMapping
     public String dashboard(Model model, Authentication auth) {
+        User user = userService.findByUsername(auth.getName());
+
+        model.addAttribute("userId", user.getId());
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("userEmail", user.getEmail());
+        model.addAttribute("userFirstName", user.getFirstName());
+        model.addAttribute("userLastName", user.getLastName());
+        model.addAttribute("userProfilePictureUrl", user.getProfilePictureUrl());
         model.addAttribute("userPosts", postService.getUserPosts(auth.getName()));
+        model.addAttribute("uploadImagePayload", new UploadImagePayload());
         return "dashboard";
+    }
+
+    @PostMapping(path = "/profileFile", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String updateProfilePicture(@ModelAttribute UploadImagePayload payload, Authentication auth) {
+        log.info("Image file {}", payload);
+        userService.uploadProfilePhoto(payload.getImageFile(), auth.getName());
+        return "redirect:/dashboard?fileUploaded";
     }
 }

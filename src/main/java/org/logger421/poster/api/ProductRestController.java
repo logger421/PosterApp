@@ -39,7 +39,7 @@ public record ProductRestController(PostService postService, UserService userSer
     }
 
     @PostMapping("/addComment")
-    public ResponseEntity<Comment> addComment(@RequestBody AddCommentRequest request, Authentication auth) {
+    public ResponseEntity<Comment> addComment(@RequestBody @NonNull AddCommentRequest request, Authentication auth) {
         log.info("Adding comment {}, by user={}", request, auth.getName());
 
         Comment added = postService.addComment(request.postId(), request.comment(), auth.getName());

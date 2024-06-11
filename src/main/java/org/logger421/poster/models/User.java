@@ -24,6 +24,8 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+    private String firstName;
+    private String lastName;
     @OneToMany(mappedBy = "author")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Post> posts;
@@ -32,5 +34,6 @@ public class User {
     @OneToMany(mappedBy = "author")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments;
+    private String profilePictureUrl;
     private Role role;
 }

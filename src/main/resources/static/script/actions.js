@@ -62,3 +62,53 @@ export async function viewComments(id) {
 
     await handleError(response);
 }
+
+export async function editProfile() {
+    let userName = document.getElementById('userName').value;
+    let userEmail = document.getElementById('email').value;
+    let userFirstName = document.getElementById('firstName').value;
+    let userLastName = document.getElementById('lastName').value;
+
+    const userDataResponse = await fetch(`${window.location.origin}/api/profile/get`, {
+        method: 'GET',
+        headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
+    })
+
+    const userData = await userDataResponse.json()
+
+    userData.userName = userName;
+    userData.email = userEmail;
+    userData.firstName = userFirstName;
+    userData.lastName = userLastName;
+
+    const response = await fetch(`${window.location.origin}/api/profile/edit`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': resolveCSRFToken().token
+        },
+        body: JSON.stringify(userData)
+    })
+
+    if (!await handleError(response)) {
+        window.location.reload()
+    }
+}
+
+export function previewImageFile() {
+    const imageUpload = document.getElementById('formImageFile');
+    const file = imageUpload.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        console.log(`Event triggered: ${e.target.result}`)
+        const imageDataUrl = e.target.result;
+        const imagePreview = document.getElementById('uploadImagePreview');
+        if(imagePreview) {
+            imagePreview.src = imageDataUrl;
+        } else {
+            const imagePreviewReal = document.getElementById('uploadImagePreviewReal');
+            imagePreviewReal.src = imageDataUrl;
+        }
+    };
+    reader.readAsDataURL(file);
+}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="description" content="Dashboard">
+    <meta name="keywords" content="html Poster template">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/script/handlers.js" type="module"></script>
+</head>
+<body>
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg navbar-light bg-gradient sticky-top" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand font-weight-bold" href="#">Poster</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item border-start border-info border-2">
+                    <a class="nav-link mx-1" aria-current="page" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item border-info border-2">
+                    <a class="nav-link mx-1" aria-current="page" th:href="@{#}">Friends</a>
+                </li>
+                <li class="nav-item border-info border-2">
+                    <a class="nav-link active mx-1" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <div class="input-group">
+                    <button class="btn btn-outline-success" type="button" id="inputGroupAddon">Search</button>
+                    <input type="search" class="form-control" id="inputGroup" aria-describedby="inputGroupFileAddon04"
+                           aria-label="Upload" placeholder="Search for friends!">
+                </div>
+            </form>
+            <form action="#" th:action="@{/logout}" method="POST"><input class="btn btn-primary m-1" type="submit"
+                                                                         value="Logout"/></form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid bg-body-secondary">
+    <div class="row ">
+        <div class="col-2">
+            <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
+        </div>
+        <div class="col-8">
+            <div class="d-flex align-items-center p-3 my-3 text-black text-bg-info rounded shadow-sm">
+                <div class="lh-1">
+                    <h1 class="h6 mb-0 text-white lh-1">
+                        <span>Your account:</span>
+                    </h1>
+                </div>
+            </div>
+            <div class="mb-3 p-3 bg-body rounded shadow-sm">
+                <div>
+                    <h6 class="border-bottom pb-2 mb-0">Account Data</h6>
+                    <form class="needs-validation">
+                        <div class="row g-3">
+                            <div class="col-3">
+                                <img src="https://placehold.co/200.png" class="img-fluid rounded mt-4 img-thumbnail border"
+                                     th:if="${userProfilePictureUrl} == null"
+                                     id="profileImagePreview"
+                                     alt="Product Image">
+                                <img src="https://placehold.co/200.png" class="img-fluid rounded mt-4 img-thumbnail border"
+                                     th:unless="${userProfilePictureUrl} == null" th:src="${userProfilePictureUrl}"
+                                     id="profileImagePreviewReal"
+                                     alt="Product Image">
+                            </div>
+                            <div class="col-4 align-content-center">
+                                <row>
+                                    <label for="userNameStatic" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="userNameStatic"
+                                           disabled placeholder="SampleName123" th:value="${userName}">
+                                </row>
+                                <row>
+                                    <label for="emailStatic" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="emailStatic"
+                                           placeholder="example@gmail.com"
+                                           disabled th:value="${userEmail}">
+                                </row>
+                            </div>
+                            <div class="col-4 align-content-center">
+                                <row>
+                                    <label for="firstNameStatic" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstNameStatic" placeholder="Jan"
+                                           disabled th:value="${userFirstName}">
+                                </row>
+                                <row>
+                                    <label for="lastNameStatic" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastNameStatic" placeholder="Kowalski"
+                                           disabled th:value="${userLastName}">
+                                </row>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#editAccount">
+                                Edit account
+                            </button>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#editPhoto">
+                                Edit photo
+                            </button>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#viewFriends">
+                                View friends
+                            </button>
+                        </div>
+
+                        <div class="modal fade" id="editAccount" tabindex="-1"
+                             aria-labelledby="editAccountModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="editModalLabel">Edit user data</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="needs-validation" novalidate="">
+                                            <div class="row g-3">
+                                                <div class="col-6">
+                                                    <label for="userName" class="form-label">User name</label>
+                                                    <input type="text" class="form-control" id="userName" placeholder=""
+                                                           required="" th:value="${userName}">
+                                                    <div class="invalid-feedback">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="email"
+                                                           placeholder="you@example.com" th:value="${userEmail}">
+                                                    <div class="invalid-feedback">
+                                                        Please enter a valid email address
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 my-3">
+                                                <div class="col-6">
+                                                    <label for="userName" class="form-label">First name</label>
+                                                    <input type="text" class="form-control" id="firstName"
+                                                           placeholder=""
+                                                           required="" th:value="${userFirstName}">
+                                                    <div class="invalid-feedback">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label for="userName" class="form-label">Last name</label>
+                                                    <input type="text" class="form-control" id="lastName" placeholder=""
+                                                           required="" th:value="${userLastName}">
+                                                    <div class="invalid-feedback">
+                                                        Valid last name is required.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" onclick="handleEditProfile()" class="btn btn-primary"
+                                                id="confirmEditUserDataButton">Save
+                                            changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="editPhoto" tabindex="-1"
+                             aria-labelledby="editPhotoModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="editPhotoModalLabel">Edit user photo</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <form class="needs-validation" novalidate="" enctype="multipart/form-data"
+                                          method="POST" th:object="${uploadImagePayload}" th:action="@{/dashboard/profileFile}">
+
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <div class="col-6">
+                                                    <img src="https://placehold.co/200.png" class="img-fluid rounded img-thumbnail border"
+                                                         th:if="${userProfilePictureUrl} == null"
+                                                         id="uploadImagePreview"
+                                                         alt="Product Image">
+                                                    <img src="https://placehold.co/200.png" class="img-fluid rounded mt-4 img-thumbnail border"
+                                                         th:unless="${userProfilePictureUrl} == null" th:src="${userProfilePictureUrl}"
+                                                         id="uploadImagePreviewReal"
+                                                         alt="Product Image">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="formImageFile" class="form-label form-label-sm"><h3>
+                                                            Upload your image</h3></label>
+                                                        <input onchange="handleImagePreview()"
+                                                               th:field="*{imageFile}"
+                                                               class="form-control form-control-sm" type="file"
+                                                               id="formImageFile" accept="image/*">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="confirmEditPhotoButton">
+                                                Save
+                                                changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex align-items-center p-3 my-3 text-bg-info rounded shadow-sm">
+                <div class="lh-1">
+                    <h1 class="h6 mb-0 text-white lh-1">
+                        <span>Your posts:</span>
+                    </h1>
+                </div>
+            </div>
+            <div id="posts">
+                <div class="card bg-light bg-gradient shadow-sm gap-3 my-3" th:each="p : ${userPosts}">
+                    <div class="card-body">
+                        <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
+                        <div class="card-subtitle"><b>Created: </b><em th:text="${p.createdAt}"></em></div>
+                        <div class="card-text" th:text="${p.content}"></div>
+                        <div class="card-footer">
+                            <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
+                                <div class="btn-group me-2" role="group" aria-label="Reactions group">
+                                    <input type="radio" class="btn-check" th:name="'radio_' + ${p.id}"
+                                           th:id="'like_' + ${p.id}" autocomplete="off">
+                                    <label th:onclick="handleAddLike([[${p.id}]])" class="btn btn-outline-primary"
+                                           th:for="'like_' + ${p.id}"><i class="fa-regular fa-thumbs-up"></i></label>
+                                    <input th:onclick="handleRemoveLike([[${p.id}]])" type="radio" class="btn-check"
+                                           th:name="'radio_' + ${p.id}" th:id="'dislike_' + ${p.id}" autocomplete="off">
+                                    <label class="btn btn-outline-secondary" th:for="'dislike_' + ${p.id}"><i
+                                            class="fa-regular fa-thumbs-down"></i></label>
+                                </div>
+                                <div class="input-group">
+                                    <button th:onclick="handleViewComments([[${p.id}]])" type="button"
+                                            class="btn btn-secondary" data-bs-toggle="modal"
+                                            th:data-bs-target="'#commentsModal' + ${p.id}"><i
+                                            class="fa-regular fa-comment"></i></button>
+                                    <input type="text" class="form-control" th:id="'comment_v_' + ${p.id}"
+                                           placeholder="Enter comment here" aria-label="Input group example"
+                                           aria-describedby="btnGroupAddon">
+                                    <button th:onclick="handleAddComment([[${p.id}]])" type="button"
+                                            class="btn btn-primary" th:id="'comment_' + ${p.id}"><i
+                                            class="fa-regular fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="'commentsModal' + ${p.id}" tabindex="-1"
+                             aria-labelledby="commentsModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="Comments"></h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" th:id="'comments_' + ${p.id}">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-link">
+    <div class="text-center p-3 bg-light">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://localhost:8080/home">www.poster.com</a>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/b53d8df8be.js" crossorigin="anonymous"></script>
+</body>
+</html>
