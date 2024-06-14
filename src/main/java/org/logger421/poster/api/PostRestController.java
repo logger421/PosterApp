@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/posts")
-public record ProductRestController(PostService postService, UserService userService) {
+public record PostRestController(PostService postService, UserService userService) {
 
     @PostMapping("/like/{postId}")
     public ResponseEntity<HttpStatus> likePost(@PathVariable @NonNull String postId, Authentication auth) {

@@ -15,8 +15,8 @@ import static jakarta.servlet.DispatcherType.FORWARD;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final String[] publicPages = new String[]{"/**", "/svg/**", "/script/**", "/uploads/**"};
-    private final String[] privatePages = new String[]{"/admin/**", "/dashboard/**", "/friends/**"};
+    private final String[] publicPages = new String[]{"/svg/**", "/script/**", "/uploads/**"};
+    private final String[] privatePages = new String[]{"/**", "/admin/**", "/dashboard/**", "/friends/**"};
     private final String[] noCSRFProtectionPages = new String[]{};
 
     @Bean

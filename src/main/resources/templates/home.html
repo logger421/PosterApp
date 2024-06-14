@@ -15,7 +15,7 @@
 </head>
 <body>
 <!--NAVBAR-->
-<nav class="navbar navbar-expand-lg navbar-light bg-gradient sticky-top" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-md navbar-light bg-gradient sticky-top" style="background-color: #e3f2fd;">
     <div class="container-fluid">
         <a class="navbar-brand font-weight-bold" href="#">Poster</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -47,12 +47,9 @@
     </div>
 </nav>
 
-<main class="container-fluid bg-body-secondary">
-    <div class="row">
-        <div class="col-2">
-            <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
-        </div>
-        <div class="col-8">
+<main class="container">
+    <div class="row justify-content-center">
+        <div class="col">
             <div th:if="${param.postCreated}" class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Post added!</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -128,9 +125,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-2">
-            <img src="https://placehold.jp/240x800.png" class="img-fluid d-none d-md-block" alt="Placeholder">
         </div>
     </div>
 </main>

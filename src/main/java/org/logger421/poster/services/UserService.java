@@ -40,16 +40,17 @@ public record UserService(UserRepository repository, PasswordEncoder passwordEnc
                 .email(userData.getEmail())
                 .role(userData.getRole() == null ? Role.USER : userData.getRole())
                 .build();
+
         repository.save(user);
     }
 
-    public void editUserData(EditUserRequest request, String name) {
-        User user = repository
-                .findByUsername(name);
+    public void editUserData(EditUserRequest request, String userName) {
+        User user = repository.findByUsername(userName);
         user.setUsername(request.userName());
         user.setEmail(request.userEmail());
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
+
         repository.save(user);
     }
 

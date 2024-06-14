@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/dashboard")
 public record DashboardController(PostService postService, UserService userService) {
 
-    @GetMapping
+    @GetMapping()
     public String dashboard(Model model, Authentication auth) {
         User user = userService.findByUsername(auth.getName());
 
@@ -29,7 +29,22 @@ public record DashboardController(PostService postService, UserService userServi
         model.addAttribute("userProfilePictureUrl", user.getProfilePictureUrl());
         model.addAttribute("userPosts", postService.getUserPosts(auth.getName()));
         model.addAttribute("uploadImagePayload", new UploadImagePayload());
+
         return "dashboard";
+    }
+
+    @GetMapping("/{userId}")
+    public String userDashboard(@PathVariable Long userId, Model model, Authentication auth) {
+        User user = userService.findById(userId);
+
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("userEmail", user.getEmail());
+        model.addAttribute("userFirstName", user.getFirstName());
+        model.addAttribute("userLastName", user.getLastName());
+        model.addAttribute("userProfilePictureUrl", user.getProfilePictureUrl());
+        model.addAttribute("userPosts", postService.getUserPosts(user.getUsername()));
+
+        return "user-profile";
     }
 
     @PostMapping(path = "/profileFile", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
