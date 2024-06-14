@@ -103,7 +103,7 @@ export function previewImageFile() {
         console.log(`Event triggered: ${e.target.result}`)
         const imageDataUrl = e.target.result;
         const imagePreview = document.getElementById('uploadImagePreview');
-        if(imagePreview) {
+        if (imagePreview) {
             imagePreview.src = imageDataUrl;
         } else {
             const imagePreviewReal = document.getElementById('uploadImagePreviewReal');
@@ -111,4 +111,13 @@ export function previewImageFile() {
         }
     };
     reader.readAsDataURL(file);
+}
+
+export async function addFriend(userName) {
+    const response = await fetch(`${window.location.origin}/friends/add?userName=${userName}`, {
+        method: 'POST',
+        headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
+    })
+
+    await handleError(response)
 }

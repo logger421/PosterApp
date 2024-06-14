@@ -35,5 +35,7 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments;
     private String profilePictureUrl;
+    @ManyToMany
+    private List<User> friends;
     private Role role;
 }

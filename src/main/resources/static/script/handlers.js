@@ -1,4 +1,4 @@
-import {addLike, dislike, addComment, viewComments, previewImageFile, editProfile} from "./actions.js";
+import {addLike, dislike, addComment, viewComments, previewImageFile, editProfile, addFriend} from "./actions.js";
 
 async function handleAddLike(postId) {
     await addLike(postId);
@@ -24,8 +24,13 @@ async function handleEditProfile() {
     await editProfile()
     window.window.href = '/dashboard';
 }
+
 function handleImagePreview() {
     previewImageFile();
+}
+
+async function handleAddFriend(userName) {
+    await addFriend(userName)
 }
 
 window.handleAddLike = handleAddLike;
@@ -34,3 +39,4 @@ window.handleAddComment = handleAddComment;
 window.handleViewComments = handleViewComments;
 window.handleImagePreview = handleImagePreview;
 window.handleEditProfile = handleEditProfile;
+window.handleAddFriend = handleAddFriend;

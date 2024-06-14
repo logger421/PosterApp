@@ -29,7 +29,7 @@
                     <a class="nav-link mx-1" aria-current="page" th:href="@{/home}">Home</a>
                 </li>
                 <li class="nav-item border-info border-2">
-                    <a class="nav-link mx-1" aria-current="page" th:href="@{#}">Friends</a>
+                    <a class="nav-link mx-1" aria-current="page" th:href="@{/friends}">Friends</a>
                 </li>
                 <li class="nav-item border-info border-2">
                     <a class="nav-link active mx-1" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
@@ -124,11 +124,10 @@
                                 <i class="fa-regular fa-image"></i>
                                 Edit photo
                             </button>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#viewFriends">
+                            <a class="btn btn-success" th:href="@{/friends}" href="#">
                                 <i class="fa-regular fa-eye"></i>
                                 View friends
-                            </button>
+                            </a>
                         </div>
                         <!--EDIT ACCOUNT DATA MODAL-->
                         <div class="modal fade" id="editAccount" tabindex="-1" aria-labelledby="editAccountModal"
@@ -163,7 +162,7 @@
                                             </div>
                                             <div class="row g-3 my-3">
                                                 <div class="col-6">
-                                                    <label for="userName" class="form-label">First name</label>
+                                                    <label for="firstName" class="form-label">First name</label>
                                                     <input type="text" class="form-control" id="firstName"
                                                            placeholder=""
                                                            required="" th:value="${userFirstName}">
@@ -173,7 +172,7 @@
                                                 </div>
 
                                                 <div class="col-6">
-                                                    <label for="userName" class="form-label">Last name</label>
+                                                    <label for="lastName" class="form-label">Last name</label>
                                                     <input type="text" class="form-control" id="lastName" placeholder=""
                                                            required="" th:value="${userLastName}">
                                                     <div class="invalid-feedback">
@@ -228,8 +227,9 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mb-3">
-                                                        <label for="formImageFile" class="form-label form-label-sm"><h3>
-                                                            Upload your image</h3></label>
+                                                        <label for="formImageFile" class="form-label form-label-sm">
+                                                            <b>Upload your image</b>
+                                                        </label>
                                                         <input onchange="handleImagePreview()"
                                                                th:field="*{imageFile}"
                                                                class="form-control form-control-sm" type="file"

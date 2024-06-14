@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -75,6 +77,19 @@ public record UserService(UserRepository repository, PasswordEncoder passwordEnc
 
         User user = repository.findByUsername(username);
         user.setProfilePictureUrl(imageUrl);
+        repository.save(user);
+    }
+
+    public List<User> getFriends(String userName) {
+        User user = repository.findByUsername(userName);
+        return user.getFriends();
+    }
+
+    public void addFriend(String username, String friendName) {
+        User user = repository.findByUsername(username);
+        User friend = repository.findByUsername(friendName);
+        List<User> friends = user.getFriends();
+        friends.add(friend);
         repository.save(user);
     }
 }

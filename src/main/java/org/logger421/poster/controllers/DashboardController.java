@@ -36,7 +36,6 @@ public record DashboardController(PostService postService, UserService userServi
     @GetMapping("/{userId}")
     public String userDashboard(@PathVariable Long userId, Model model, Authentication auth) {
         User user = userService.findById(userId);
-
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("userEmail", user.getEmail());
         model.addAttribute("userFirstName", user.getFirstName());

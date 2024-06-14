@@ -8,8 +8,9 @@ import org.logger421.poster.models.Role;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    private String firstName;
+    private String lastName;
     private String username;
-    private String password;
     private String email;
-    private Role role;
+    private String profilePictureUrl;
 }
