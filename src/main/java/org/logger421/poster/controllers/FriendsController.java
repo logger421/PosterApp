@@ -30,6 +30,7 @@ public record FriendsController(UserService userService) {
                 .getFriends(auth.getName())
                 .stream()
                 .map(user -> new UserDTO(
+                        user.getId(),
                         user.getFirstName(),
                         user.getLastName(),
                         user.getUsername(),

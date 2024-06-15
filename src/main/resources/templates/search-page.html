@@ -48,42 +48,46 @@
 </nav>
 
 <main class="container my-3">
+    <p class="display-2 mx-auto text-center">Search: <span th:text="${searchPrompt}"></span></p>
     <div>
         <div class="d-flex align-items-center p-3 my-3 text-black text-bg-info rounded shadow-sm">
             <div class="lh-1">
                 <h1 class="h6 mb-0 text-white lh-1">
                     <i class="fa-regular fa-user"></i>
-                    <span>Your friends:</span>
+                    <span>Search result:</span>
                 </h1>
             </div>
         </div>
     </div>
-    <div id="friends">
-        <div class="card mb-3" th:each="friend : ${friends}">
+    <div class="text-center" th:if="${foundUsers.size() == 0}">
+        <h6 class="display-6 mx-auto">Nothing to show</h6>
+    </div>
+    <div id="search" th:unless="${foundUsers.size() == 0}">
+        <div class="card mb-3" th:each="user : ${foundUsers}">
             <div class="row g-0">
                 <div class="col-md-2">
-                    <a class="link-dark" th:href="'/dashboard/' + ${friend.userId}">
+                    <a class="link-dark" th:href="'/dashboard/' + ${user.userId}">
                         <img
                                 src="https://placehold.co/200.png"
                                 class="img-fluid rounded-start"
-                                th:if="${friend.profilePictureUrl} == null"
+                                th:if="${user.profilePictureUrl} == null"
                                 id="profileImage"
                                 alt="Product Image">
                     </a>
-                    <a class="link-dark" th:href="'/dashboard/' + ${friend.userId}">
+                    <a class="link-dark" th:href="'/dashboard/' + ${user.userId}">
                         <img
                                 class="img-fluid rounded-start"
-                                th:unless="${friend.profilePictureUrl} == null" th:src="${friend.profilePictureUrl}"
+                                th:unless="${user.profilePictureUrl} == null" th:src="${user.profilePictureUrl}"
                                 id="profileImageReal"
                                 alt="Product Image">
                     </a>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <a class="link-dark" th:href="'/dashboard/' + ${friend.userId}">
-                            <h5 class="card-title"><b th:text="${friend.firstName} + ' ' + ${friend.lastName}"></b></h5>
+                        <a class="link-dark" th:href="'/dashboard/' + ${user.userId}">
+                            <h5 class="card-title"><b th:text="${user.firstName} + ' ' + ${user.lastName}"></b></h5>
                         </a>
-                        <p class="card-text" th:text="${friend.username}"></p>
+                        <p class="card-text" th:text="${user.username}"></p>
                         <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                     </div>
                 </div>

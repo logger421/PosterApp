@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -91,5 +88,9 @@ public record UserService(UserRepository repository, PasswordEncoder passwordEnc
         List<User> friends = user.getFriends();
         friends.add(friend);
         repository.save(user);
+    }
+
+    public List<User> getSearchUsers(String searchPrompt) {
+        return repository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrUsernameContainingIgnoreCase(searchPrompt, searchPrompt, searchPrompt);
     }
 }

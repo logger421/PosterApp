@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -28,19 +29,76 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        User user1 = new User(1L, "user1", bcryptEncoder.encode("user"), "user1@user.com", "Jan", "Kowalski", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, new ArrayList<>(), Role.USER);
-        User user2 = new User(2L, "user2", bcryptEncoder.encode("user"), "user2@user.com", "Adam", "Bartosik", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, new ArrayList<>(), Role.USER);
-        User adminUser = new User(3L, "admin", bcryptEncoder.encode("admin"), "admin@admin.com", "Karol", "Nowak", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, new ArrayList<>(), Role.ADMIN);
-
+        User user1 = User
+                .builder()
+                .id(null)
+                .firstName("John")
+                .lastName("Smith")
+                .username("TestUser")
+                .email("testuser@gmail.com")
+                .password(bcryptEncoder.encode("user"))
+                .role(Role.USER)
+                .posts(new ArrayList<>())
+                .comments(new ArrayList<>())
+                .friends(new ArrayList<>())
+                .likedPosts(new ArrayList<>())
+                .profilePictureUrl(null).build();
+        User user2 = User
+                .builder()
+                .id(null)
+                .firstName("Abbey")
+                .lastName("Brown")
+                .username("FamousUser")
+                .email("famous@gmail.com")
+                .password(bcryptEncoder.encode("user"))
+                .role(Role.USER)
+                .posts(new ArrayList<>())
+                .comments(new ArrayList<>())
+                .friends(new ArrayList<>())
+                .likedPosts(new ArrayList<>())
+                .profilePictureUrl(null).build();
+        User user = User
+                .builder()
+                .id(null)
+                .firstName("John")
+                .lastName("Smith")
+                .username("SimpleUser")
+                .email("simpleUser@gmail.com")
+                .password(bcryptEncoder.encode("user"))
+                .role(Role.USER)
+                .posts(new ArrayList<>())
+                .comments(new ArrayList<>())
+                .friends(List.of(user1, user2))
+                .likedPosts(new ArrayList<>())
+                .profilePictureUrl(null).build();
+        User adminUser = User
+                .builder()
+                .id(null)
+                .firstName("Charles")
+                .lastName("Charles")
+                .username("admin")
+                .email("admin@poster.com")
+                .password(bcryptEncoder.encode("user"))
+                .role(Role.USER)
+                .posts(new ArrayList<>())
+                .comments(new ArrayList<>())
+                .friends(new ArrayList<>())
+                .likedPosts(new ArrayList<>())
+                .profilePictureUrl(null).build();
         if (userRepository.count() == 0) {
             userRepository.save(user1);
             userRepository.save(user2);
+            userRepository.save(user);
             userRepository.save(adminUser);
         }
         if (postRepository.count() == 0) {
-            postRepository.save(new Post(null, "Example content4", user1, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
-            postRepository.save(new Post(null, "Example content5", user2, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
-            postRepository.save(new Post(null, "Example content6", user1, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "A little progress each day adds up to big results. Keep going!", user1, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "Challenges are what make life interesting and overcoming them is what makes life meaningful. Embrace your struggles and turn them into strengths. You have the power to conquer anything!", user1, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "Grateful for the little things in life. What are you thankful for today?", user2, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "It's easy to get caught up in the hustle and bustle of daily life. Remember to take a moment to appreciate the beauty around you. Breathe deeply, smile often, and enjoy the journey.", user2, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "Start your day with a smile and a positive thought. Happy Monday!", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "Life is better with friends by your side. Cherish every moment!", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
+            postRepository.save(new Post(null, "Believe in yourself and all that you are. You are capable of great things!", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
         }
     }
 }

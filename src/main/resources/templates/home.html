@@ -13,7 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/script/handlers.js" type="module"></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-body-secondary">
 <!--NAVBAR-->
 <nav class="navbar navbar-expand-md navbar-light bg-gradient sticky-top" style="background-color: #e3f2fd;">
     <div class="container-fluid">
@@ -28,17 +28,17 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/home}">Home</a>
                 </li>
                 <li class="nav-item border-info border-2">
-                    <a class="nav-link" aria-current="page" th:href="@{#}">Friends</a>
+                    <a class="nav-link" aria-current="page" th:href="@{/friends}">Friends</a>
                 </li>
                 <li class="nav-item border-info border-2">
                     <a class="nav-link" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <div class="input-group">
+            <form class="d-flex" action="#" th:action="@{/search}" method="GET">
+                <div class="input-group" >
                     <button class="btn btn-outline-success" type="button" id="inputGroupAddon">Search</button>
                     <input type="search" class="form-control" id="inputGroup" aria-describedby="inputGroupFileAddon04"
-                           aria-label="Upload" placeholder="Search for friends!">
+                           aria-label="Upload" placeholder="Search for friends!" name="search">
                 </div>
             </form>
             <form action="#" th:action="@{/logout}" method="POST"><input class="btn btn-primary m-1" type="submit"
@@ -73,7 +73,9 @@
             <div id="posts">
                 <div class="card bg-light bg-gradient shadow-sm gap-3 my-3" th:each="p : ${posts}">
                     <div class="card-body">
-                        <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
+                        <a class="link-dark" th:href="'/dashboard/' + ${p.author.id}">
+                            <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
+                        </a>
                         <div class="card-subtitle"><b>Created: </b><em th:text="${p.createdAt}"></em></div>
                         <div class="card-text" th:text="${p.content}"></div>
                         <div class="card-footer">
@@ -105,7 +107,7 @@
                         <!-- Modal -->
                         <div class="modal fade" th:id="'commentsModal' + ${p.id}" tabindex="-1"
                              aria-labelledby="commentsModal" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="Comments"></h1>
@@ -130,7 +132,7 @@
 </main>
 
 <!-- Footer -->
-<footer class="bg-link">
+<footer class="bg-link mt-auto">
     <div class="text-center p-3 bg-light">
         © 2024 Copyright:
         <a class="text-dark" href="https://localhost:8080/home">www.poster.com</a>

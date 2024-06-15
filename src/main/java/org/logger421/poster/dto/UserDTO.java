@@ -8,6 +8,7 @@ import org.logger421.poster.models.Role;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    private Long userId;
     private String firstName;
     private String lastName;
     private String username;
