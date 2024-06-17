@@ -1,22 +1,41 @@
-version: '3.8'
 services:
   postgres:
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=1234
     volumes:
-      - postgresql:/poster/db
+      - postgresql:/var/lib/postgresql/data
+    networks:
+      - spring-cloud-network
   pgAdmin:
     image: dpage/pgadmin4:latest
     ports:
-      - "5051:5051"
+      - "127.0.0.1:5051:80"
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=1234
-
+    depends_on:
+      - postgres
+    networks:
+      - spring-cloud-network
+  app-server:
+    container_name: app-server
+    build:
+      context: docker-app-server
+      dockerfile: Dockerfile
+    image: poster-server:latest
+    ports:
+      - "127.0.0.1:80:8080"
+    networks:
+      - spring-cloud-network
+    depends_on:
+      - postgres
 volumes:
   postgresql:
     driver: local
+networks:
+  spring-cloud-network:
+    driver: bridge
