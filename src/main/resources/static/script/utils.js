@@ -17,3 +17,11 @@ export function setEventListener(objectId, eventListener) {
     const object = document.getElementById(objectId);
     object.addEventListener('click', eventListener);
 }
+
+export function getWindowLocation() {
+    return window.location.origin + getContextPath();
+}
+
+export function getContextPath() {
+    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))
+}

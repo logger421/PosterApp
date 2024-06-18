@@ -1,18 +1,20 @@
-import {handleError, resolveCSRFToken, setEventListener} from "./utils.js";
+import {handleError, resolveCSRFToken, getWindowLocation} from "./utils.js";
 
 export async function addLike(id) {
-    const response = await fetch(`${window.location.origin}/api/posts/like/${id}`, {
+    const response = await fetch(`${getWindowLocation()}/api/posts/like/${id}`, {
         method: 'POST',
         headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
     })
+
     await handleError(response)
 }
 
 export async function dislike(id) {
-    const response = await fetch(`${window.location.origin}/api/posts/dislike/${id}`, {
+    const response = await fetch(`${getWindowLocation()}/api/posts/dislike/${id}`, {
         method: 'POST',
         headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
     })
+
     await handleError(response)
 }
 
@@ -23,7 +25,7 @@ export async function addComment(id) {
         alert("Comment field must be filled out");
         return;
     }
-    const response = await fetch(`${window.location.origin}/api/posts/addComment`, {
+    const response = await fetch(`${getWindowLocation()}/api/posts/addComment`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ export async function addComment(id) {
 }
 
 export async function viewComments(id) {
-    const response = await fetch(`${window.location.origin}/api/posts/view/comments/${id}`, {
+    const response = await fetch(`${getWindowLocation()}/api/posts/view/comments/${id}`, {
         method: 'GET'
     })
     const commentsBody = await response.json();
@@ -69,7 +71,7 @@ export async function editProfile() {
     let userFirstName = document.getElementById('firstName').value;
     let userLastName = document.getElementById('lastName').value;
 
-    const userDataResponse = await fetch(`${window.location.origin}/api/profile/get`, {
+    const userDataResponse = await fetch(`${getWindowLocation()}/api/profile/get`, {
         method: 'GET',
         headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
     })
@@ -81,7 +83,7 @@ export async function editProfile() {
     userData.firstName = userFirstName;
     userData.lastName = userLastName;
 
-    const response = await fetch(`${window.location.origin}/api/profile/edit`, {
+    const response = await fetch(`${getWindowLocation()}/api/profile/edit`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -99,8 +101,8 @@ export function previewImageFile() {
     const imageUpload = document.getElementById('formImageFile');
     const file = imageUpload.files[0];
     const reader = new FileReader();
+
     reader.onload = function (e) {
-        console.log(`Event triggered: ${e.target.result}`)
         const imageDataUrl = e.target.result;
         const imagePreview = document.getElementById('uploadImagePreview');
         if (imagePreview) {
@@ -110,11 +112,12 @@ export function previewImageFile() {
             imagePreviewReal.src = imageDataUrl;
         }
     };
+
     reader.readAsDataURL(file);
 }
 
 export async function addFriend(userName) {
-    const response = await fetch(`${window.location.origin}/friends/add?userName=${userName}`, {
+    const response = await fetch(`${getWindowLocation()}/user/friends/add?userName=${userName}`, {
         method: 'POST',
         headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
     })

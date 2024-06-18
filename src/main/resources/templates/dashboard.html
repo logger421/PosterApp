@@ -30,13 +30,13 @@
                     <a class="nav-link mx-1" aria-current="page" th:href="@{/home}">Home</a>
                 </li>
                 <li class="nav-item border-info border-2">
-                    <a class="nav-link mx-1" aria-current="page" th:href="@{/friends}">Friends</a>
+                    <a class="nav-link mx-1" aria-current="page" th:href="@{/user/friends}">Friends</a>
                 </li>
                 <li class="nav-item border-info border-2">
                     <a class="nav-link active mx-1" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
                 </li>
             </ul>
-            <form class="d-flex" action="#" th:action="@{/home/search}" method="GET">
+            <form class="d-flex" action="#" th:action="@{/user/search}" method="GET">
                 <div class="input-group" >
                     <button class="btn btn-outline-success" type="button" id="inputGroupAddon">Search</button>
                     <input type="search" class="form-control" id="inputGroup" aria-describedby="inputGroupFileAddon04"
@@ -125,7 +125,7 @@
                                 <i class="fa-regular fa-image"></i>
                                 Edit photo
                             </button>
-                            <a class="btn btn-success" th:href="@{/friends}" href="#">
+                            <a class="btn btn-success" th:href="@{/user/friends}" href="#">
                                 <i class="fa-regular fa-eye"></i>
                                 View friends
                             </a>

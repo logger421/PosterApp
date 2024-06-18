@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.logger421.poster.models.User;
 import org.logger421.poster.requests.EditUserRequest;
 import org.logger421.poster.services.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
