@@ -16,7 +16,12 @@ import java.util.List;
 @Controller
 public record HomeController(PostService postService, UserService userService) {
 
-    @GetMapping(value = {"/", "/home", "/index"})
+    @GetMapping(value = {"/", "/index", "/poster"})
+    public String index() {
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
     public String homePage(Model model, Authentication auth) {
         User user = userService.findByUsername(auth.getName());
         List<Post> posts = postService.getPosts();

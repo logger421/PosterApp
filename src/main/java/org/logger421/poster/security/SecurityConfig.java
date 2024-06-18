@@ -16,7 +16,7 @@ import static jakarta.servlet.DispatcherType.FORWARD;
 @EnableWebSecurity
 public class SecurityConfig {
     private final String[] publicPages = new String[]{"/svg/**", "/script/**", "/uploads/**"};
-    private final String[] privatePages = new String[]{"/**", "/admin/**", "/dashboard/**", "/friends/**"};
+    private final String[] privatePages = new String[]{"/", "/index", "/poster", "/home/**", "/admin/**", "/dashboard/**", "/friends/**"};
     private final String[] noCSRFProtectionPages = new String[]{};
 
     @Bean
@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .formLogin(form -> form.loginPage("/login")
                         .permitAll()
-                        .defaultSuccessUrl("/"))
+                        .defaultSuccessUrl("/home"))
                 .logout(logout -> logout.logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)

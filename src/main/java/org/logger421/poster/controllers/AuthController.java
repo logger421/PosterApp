@@ -23,12 +23,6 @@ public record AuthController(UserService userService) {
         return "register";
     }
 
-//    @PostMapping("/registerNew")
-//    public String register(@RequestBody UserRegistrationRequest request) {
-//        userService.registerCustomer(request);
-//        return "redirect:/login?registered";
-//    }
-
     @PostMapping("/register")
     public String registerNewUser(@ModelAttribute("user") User user) {
         userService.registerCustomer(user);

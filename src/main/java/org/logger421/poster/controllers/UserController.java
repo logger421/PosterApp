@@ -12,6 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping("/home")
 public record UserController(UserService userService) {
 
     @RequestMapping("/search")
