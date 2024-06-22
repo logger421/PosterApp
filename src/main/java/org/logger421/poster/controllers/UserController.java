@@ -4,15 +4,14 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.logger421.poster.dto.UserDTO;
 import org.logger421.poster.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -66,13 +65,20 @@ public record UserController(UserService userService) {
 
         model.addAttribute("friends", friends);
 
-        return "friends";
+        return "/friends";
     }
 
     @PostMapping("/friends/add")
-    String addFriend(@RequestParam(name = "userName") @NonNull String userName, Authentication auth) {
+    ResponseEntity<ResponseStatus> addFriend(@RequestParam(name = "userName") @NonNull String userName, Authentication auth) {
         log.info("{} added to friends: {}", auth.getName(), userName);
-        userService.addFriend(auth.getName(), userName);
-        return "redirect:/user/friends?requestSend";
+        boolean result = userService.addFriend(auth.getName(), userName);
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/friends/delete")
+    ResponseEntity<ResponseStatus> deleteFriend(@RequestParam(name = "userName") @NonNull String userName, Authentication auth) {
+        log.info("{} deleted from friends: {}", auth.getName(), userName);
+        boolean result = userService.deleteFriend(auth.getName(), userName);
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }

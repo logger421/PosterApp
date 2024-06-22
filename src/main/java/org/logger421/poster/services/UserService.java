@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -82,15 +84,41 @@ public record UserService(UserRepository repository, PasswordEncoder passwordEnc
         return user.getFriends();
     }
 
-    public void addFriend(String username, String friendName) {
+    public boolean addFriend(String username, String friendName) {
+        User user = repository.findByUsername(username);
+        User friend = repository.findByUsername(friendName);
+        if(user == null || friend == null)
+            return false;
+        List<User> friends = user.getFriends();
+        friends.add(friend);
+        user.setFriends(friends);
+        repository.save(user);
+        return true;
+    }
+
+    public boolean deleteFriend(String username, String friendName) {
+        User user = repository.findByUsername(username);
+        User friend = repository.findByUsername(friendName);
+        if(user == null || friend == null)
+            return false;
+        List<User> friends = user.getFriends();
+        friends.remove(friend);
+        user.setFriends(friends);
+        repository.save(user);
+        return true;
+    }
+
+    public boolean checkIfFriendExists(String username, String friendName) {
         User user = repository.findByUsername(username);
         User friend = repository.findByUsername(friendName);
         List<User> friends = user.getFriends();
-        friends.add(friend);
-        repository.save(user);
+        log.info("Checking if friend {} exists", friends.contains(friend));
+        return friends.contains(friend);
     }
 
     public List<User> getSearchUsers(String searchPrompt) {
         return repository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrUsernameContainingIgnoreCase(searchPrompt, searchPrompt, searchPrompt);
     }
+
+
 }

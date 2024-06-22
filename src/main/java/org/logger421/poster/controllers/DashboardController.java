@@ -42,6 +42,7 @@ public record DashboardController(PostService postService, UserService userServi
         model.addAttribute("userLastName", user.getLastName());
         model.addAttribute("userProfilePictureUrl", user.getProfilePictureUrl());
         model.addAttribute("userPosts", postService.getUserPosts(user.getUsername()));
+        model.addAttribute("areFriends", userService.checkIfFriendExists(auth.getName(), user.getUsername()));
 
         return "user-profile";
     }
