@@ -53,10 +53,11 @@ export async function viewComments(id) {
 
     for (let i in commentsBody) {
         const comment = commentsBody[i];
+        const date = new Date(comment['createdAt']);
         comments.innerHTML += `
             <div class="card m-3 p-2">
                 <div class="card-title m-1"><b>Author: ${comment['userName']}</b></div>
-                <div class="card-subtitle m-1"><b>Created: </b><em>${comment['createdAt']}</em></div>
+                <div class="card-subtitle m-1"><b>Created: </b><em>${date.toDateString()}</em></div>
                 <div class="card-body m-1">${comment['comment']}</div>
             </div>
         `;

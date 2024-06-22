@@ -72,41 +72,41 @@
                 </div>
             </form>
             <div id="posts">
-                <div class="card bg-light bg-gradient shadow-sm gap-3 my-3" th:each="p : ${posts}">
+                <div class="card bg-light bg-gradient shadow-sm gap-3 my-3" th:each="post : ${posts}">
                     <div class="card-body">
-                        <a class="link-dark" th:href="@{'/dashboard/' + ${p.author.id}}">
-                            <h5 class="card-title"><b th:text="${p.author.username}"></b></h5>
+                        <a class="link-dark" th:href="@{'/dashboard/' + ${post.author.id}}">
+                            <h5 class="card-title"><b th:text="${post.author.username}"></b></h5>
                         </a>
-                        <div class="card-subtitle"><b>Created: </b><em th:text="${p.createdAt}"></em></div>
-                        <div class="card-text" th:text="${p.content}"></div>
+                        <div class="card-subtitle"><b>Created: </b><em th:text="${post.createdAt.toLocaleString()}"></em></div>
+                        <div class="card-text" th:text="${post.content}"></div>
                         <div class="card-footer">
                             <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
                                 <div class="btn-group me-2" role="group" aria-label="Reactions group">
-                                    <input type="radio" class="btn-check" th:name="'radio_' + ${p.id}"
-                                           th:id="'like_' + ${p.id}" autocomplete="off">
-                                    <label th:onclick="handleAddLike([[${p.id}]])" class="btn btn-outline-primary"
-                                           th:for="'like_' + ${p.id}"><i class="fa-regular fa-thumbs-up"></i></label>
-                                    <input th:onclick="handleRemoveLike([[${p.id}]])" type="radio" class="btn-check"
-                                           th:name="'radio_' + ${p.id}" th:id="'dislike_' + ${p.id}" autocomplete="off">
-                                    <label class="btn btn-outline-secondary" th:for="'dislike_' + ${p.id}"><i
+                                    <input type="radio" class="btn-check" th:name="'radio_' + ${post.id}"
+                                           th:id="'like_' + ${post.id}" autocomplete="off">
+                                    <label th:onclick="handleAddLike([[${post.id}]])" class="btn btn-outline-primary"
+                                           th:for="'like_' + ${post.id}"><i class="fa-regular fa-thumbs-up"></i></label>
+                                    <input th:onclick="handleRemoveLike([[${post.id}]])" type="radio" class="btn-check"
+                                           th:name="'radio_' + ${post.id}" th:id="'dislike_' + ${post.id}" autocomplete="off">
+                                    <label class="btn btn-outline-secondary" th:for="'dislike_' + ${post.id}"><i
                                             class="fa-regular fa-thumbs-down"></i></label>
                                 </div>
                                 <div class="input-group">
-                                    <button th:onclick="handleViewComments([[${p.id}]])" type="button"
+                                    <button th:onclick="handleViewComments([[${post.id}]])" type="button"
                                             class="btn btn-secondary" data-bs-toggle="modal"
-                                            th:data-bs-target="'#commentsModal' + ${p.id}"><i
+                                            th:data-bs-target="'#commentsModal' + ${post.id}"><i
                                             class="fa-regular fa-comment"></i></button>
-                                    <input type="text" class="form-control" th:id="'comment_v_' + ${p.id}"
+                                    <input type="text" class="form-control" th:id="'comment_v_' + ${post.id}"
                                            placeholder="Enter comment here" aria-label="Input group example"
                                            aria-describedby="btnGroupAddon">
-                                    <button th:onclick="handleAddComment([[${p.id}]])" type="button"
-                                            class="btn btn-primary" th:id="'comment_' + ${p.id}"><i
+                                    <button th:onclick="handleAddComment([[${post.id}]])" type="button"
+                                            class="btn btn-primary" th:id="'comment_' + ${post.id}"><i
                                             class="fa-regular fa-paper-plane"></i></button>
                                 </div>
                             </div>
                         </div>
                         <!-- Modal -->
-                        <div class="modal fade" th:id="'commentsModal' + ${p.id}" tabindex="-1"
+                        <div class="modal fade" th:id="'commentsModal' + ${post.id}" tabindex="-1"
                              aria-labelledby="commentsModal" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
@@ -115,7 +115,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body" th:id="'comments_' + ${p.id}">
+                                    <div class="modal-body" th:id="'comments_' + ${post.id}">
                                         ...
                                     </div>
                                     <div class="modal-footer">
