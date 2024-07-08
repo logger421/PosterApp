@@ -39,10 +39,16 @@ export async function viewComments(id) {
         const comment = commentsBody[i];
         const date = new Date(comment['createdAt']);
         comments.innerHTML += `
-            <div class="card m-3 p-2">
-                <div class="card-title m-1"><b>Author: ${comment['userName']}</b></div>
-                <div class="card-subtitle m-1"><b>Created: </b><em>${date.toDateString()}</em></div>
-                <div class="card-body m-1">${comment['comment']}</div>
+            <div class="card shadow-sm mt-2">
+                <div class="card-body">
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col"><b>${comment['userName']}</b></div>
+                            <div class="col text-end"><em>${date.toDateString()}</em></div>
+                        </div>
+                        <div class="card-text mt-2">${comment['comment']}</div>
+                    </div>
+                </div>
             </div>
         `;
     }

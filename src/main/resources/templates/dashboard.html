@@ -50,9 +50,9 @@
 <main class="container">
     <div class="row ">
         <div class="col">
-            <div class="d-flex align-items-center p-3 my-3 text-black text-bg-info rounded shadow-sm">
+            <div class="d-flex align-items-center p-3 my-3 text-black text-bg-dark rounded shadow-sm">
                 <div class="lh-1">
-                    <h1 class="h6 mb-0 text-white lh-1">
+                    <h1 class="h6 mb-0 text-warning lh-1">
                         <i class="fa-regular fa-user"></i>
                         <span>Your account:</span>
                     </h1>
@@ -258,9 +258,9 @@
                     </form>
                 </div>
             </div>
-            <div class="d-flex align-items-center p-3 my-3 text-bg-info rounded shadow-sm">
+            <div class="d-flex align-items-center p-3 my-3 text-bg-dark rounded shadow-sm">
                 <div class="lh-1">
-                    <h1 class="h6 mb-0 text-white lh-1">
+                    <h1 class="h6 mb-0 text-warning lh-1">
                         <i class="fa-solid fa-signs-post"></i>
                         <span>Your posts:</span>
                     </h1>
@@ -274,7 +274,7 @@
                         </a>
                         <div class="card-subtitle"><b>Created: </b><em
                                 th:text="${post.createdAt.toLocaleString()}"></em></div>
-                        <div class="card-text" th:text="${post.content}"></div>
+                        <div class="card-text mt-2 mb-3" th:text="${post.content}"></div>
                         <div class="card-footer">
                             <div class="btn-toolbar" role="toolbar" aria-label="Post toolbar with button groups">
                                 <div class="btn-group me-2" role="group" aria-label="Reactions group">
@@ -302,12 +302,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal -->
-                        <div class="modal fade" th:id="'commentsModal' + ${post.id}" tabindex="-1"
+                        <!-- COMMENTS Modal -->
+                        <div class="modal modal-lg fade" th:id="'commentsModal' + ${post.id}" tabindex="-1"
                              aria-labelledby="commentsModal" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content bg-body-secondary">
+                                    <div class="modal-header text-bg-dark" data-bs-theme="dark">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="Comments"></h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
