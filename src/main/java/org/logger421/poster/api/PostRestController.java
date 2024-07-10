@@ -17,28 +17,28 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/post")
 public record PostRestController(PostService postService, UserService userService) {
 
     @PostMapping("/like/{postId}")
-    public ResponseEntity<HttpStatus> likePost(@PathVariable @NonNull String postId, Authentication auth) {
+    public ResponseEntity<HttpStatus> likePost(@PathVariable @NonNull Long postId, Authentication auth) {
         log.info("Adding like for postId={}, by user={}", postId, auth.getName());
 
-        boolean successful = postService.editPost(Long.parseLong(postId), auth.getName(), PostRequestAction.ADD_LIKE);
+        boolean successful = postService.editPost(postId, auth.getName(), PostRequestAction.ADD_LIKE);
 
         return successful ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/dislike/{postId}")
-    public ResponseEntity<HttpStatus> dislikePost(@PathVariable @NonNull String postId, Authentication auth) {
+    public ResponseEntity<HttpStatus> dislikePost(@PathVariable @NonNull Long postId, Authentication auth) {
         log.info("Removing like for postId={}, by user={}", postId, auth.getName());
 
-        boolean successful = postService.editPost(Long.parseLong(postId), auth.getName(), PostRequestAction.REMOVE_LIKE);
+        boolean successful = postService.editPost(postId, auth.getName(), PostRequestAction.REMOVE_LIKE);
 
         return successful ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/addComment")
+    @PostMapping("/comments")
     public ResponseEntity<Comment> addComment(@RequestBody @NonNull AddCommentRequest request, Authentication auth) {
         log.info("Adding comment {}, by user={}", request, auth.getName());
 
@@ -47,11 +47,20 @@ public record PostRestController(PostService postService, UserService userServic
         return added != null ? ResponseEntity.ok(added) : ResponseEntity.internalServerError().build();
     }
 
-    @GetMapping("/view/comments/{postId}")
-    public List<CommentDTO> getComments(@PathVariable @NonNull String postId, Authentication auth) {
-        log.info("Viewing comments for postId={}, by user={}", postId, auth.getName());
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<Comment> deleteComment(@PathVariable @NonNull Long id, Authentication auth) {
+        log.info("Deleting comment id={}, by user={}", id, auth.getName());
 
-        List<Comment> comments = postService.getComments(Long.parseLong(postId));
+        Comment deleted = postService.deleteComment(id);
+
+        return deleted != null ? ResponseEntity.ok(deleted) : ResponseEntity.internalServerError().build();
+    }
+
+    @GetMapping("/comments/{id}")
+    public List<CommentDTO> getComments(@PathVariable @NonNull Long id, Authentication auth) {
+        log.info("Viewing comments for postId={}, by user={}", id, auth.getName());
+
+        List<Comment> comments = postService.getComments(id);
 
         return comments
                 .stream()

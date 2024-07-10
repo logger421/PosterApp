@@ -93,6 +93,13 @@ public class PostService {
         return commentRepository.save(newComment);
     }
 
+    @Transactional
+    public Comment deleteComment(long commentId) {
+        Comment newComment = commentRepository.findCommentById(commentId);
+        newComment.setComment("Deleted");
+        return commentRepository.save(newComment);
+    }
+
     public List<Comment> getComments(long id) {
         return commentRepository.findCommentsByPostId(id);
     }

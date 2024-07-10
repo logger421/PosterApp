@@ -1,7 +1,7 @@
 import {getWindowLocation, handleError, resolveCSRFToken} from "../utils.js";
 
 export async function addLike(id) {
-    const response = await fetch(`${getWindowLocation()}/api/posts/like/${id}`, {
+    const response = await fetch(`${getWindowLocation()}/api/post/like/${id}`, {
         method: 'POST',
         headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
     })
@@ -10,7 +10,7 @@ export async function addLike(id) {
 }
 
 export async function dislike(id) {
-    const response = await fetch(`${getWindowLocation()}/api/posts/dislike/${id}`, {
+    const response = await fetch(`${getWindowLocation()}/api/post/dislike/${id}`, {
         method: 'POST',
         headers: {'X-CSRF-TOKEN': resolveCSRFToken().token}
     })

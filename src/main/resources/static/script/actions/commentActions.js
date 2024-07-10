@@ -8,7 +8,7 @@ export async function addComment(id) {
         return;
     }
 
-    const response = await fetch(`${getWindowLocation()}/api/posts/addComment`, {
+    const response = await fetch(`${getWindowLocation()}/api/post/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export async function addComment(id) {
 }
 
 export async function viewComments(id) {
-    const response = await fetch(`${getWindowLocation()}/api/posts/view/comments/${id}`, {
+    const response = await fetch(`${getWindowLocation()}/api/post/comments/${id}`, {
         method: 'GET'
     })
 
@@ -54,4 +54,7 @@ export async function viewComments(id) {
     }
 
     await handleError(response);
+}
+
+export async function deleteComment(id) {
 }
