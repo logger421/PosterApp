@@ -1,6 +1,6 @@
-<head th:fragment="head">
+<head th:fragment="head(pageTitle)">
     <meta charset="UTF-8">
-    <title>Poster</title>
+    <title th:text="${pageTitle}"></title>
     <meta name="description" content="Home">
     <meta name="keywords" content="html Poster template">
     <meta name="_csrf" th:content="${_csrf.token}">
