@@ -107,41 +107,41 @@ public class DataLoader implements ApplicationRunner {
             postRepository.save(new Post(null, "Believe in yourself and all that you are. You are capable of great things!", user, new Timestamp(System.currentTimeMillis()), new HashSet<>(), new ArrayList<>()));
         }
 
-        if(commentRepository.count() == 0) {
-            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(2L),"Awesome!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(3L),"So happy for you!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(1L),"Agree!", new Timestamp(System.currentTimeMillis())));
+        if (commentRepository.count() == 0) {
+            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(2L), "Awesome!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(3L), "So happy for you!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(1), userRepository.findById(1L), "Agree!", new Timestamp(System.currentTimeMillis())));
 
-            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(2L),"One mind", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(3L),"100% truth", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(2L),"Indeed!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(2L), "One mind", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(3L), "100% truth", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(2), userRepository.findById(2L), "Indeed!", new Timestamp(System.currentTimeMillis())));
 
-            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(2L),"Awesome!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(3L),"So happy for you!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(1L),"Agree!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(2L), "Awesome!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(3L), "So happy for you!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(3), userRepository.findById(1L), "Agree!", new Timestamp(System.currentTimeMillis())));
 
-            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(2L),"One mind", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(3L),"100% truth", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(2L),"Indeed!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(2L), "One mind", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(3L), "100% truth", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(4), userRepository.findById(2L), "Indeed!", new Timestamp(System.currentTimeMillis())));
 
-            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(2L),"Awesome!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(3L),"So happy for you!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(1L),"Agree!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(2L), "Awesome!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(3L), "So happy for you!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(5), userRepository.findById(1L), "Agree!", new Timestamp(System.currentTimeMillis())));
 
-            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(2L),"One mind", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(3L),"100% truth", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(2L),"Indeed!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(2L), "One mind", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(3L), "100% truth", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(6), userRepository.findById(2L), "Indeed!", new Timestamp(System.currentTimeMillis())));
 
-            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(1L),"Great post!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(2L),"Awesome!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(3L),"So happy for you!", new Timestamp(System.currentTimeMillis())));
-            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(1L),"Agree!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(1L), "Great post!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(2L), "Awesome!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(3L), "So happy for you!", new Timestamp(System.currentTimeMillis())));
+            commentRepository.save(new Comment(null, postRepository.getPostById(7), userRepository.findById(1L), "Agree!", new Timestamp(System.currentTimeMillis())));
         }
     }
 }

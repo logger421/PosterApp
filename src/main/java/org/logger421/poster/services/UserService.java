@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
 @Slf4j
+@Service
 public record UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
 
     private static final String UPLOAD_DIRECTORY = "src/main/resources/static/uploads";
@@ -87,7 +87,7 @@ public record UserService(UserRepository repository, PasswordEncoder passwordEnc
     public boolean addFriend(String username, String friendName) {
         User user = repository.findByUsername(username);
         User friend = repository.findByUsername(friendName);
-        if(user == null || friend == null)
+        if (user == null || friend == null)
             return false;
         List<User> friends = user.getFriends();
         friends.add(friend);
@@ -99,7 +99,7 @@ public record UserService(UserRepository repository, PasswordEncoder passwordEnc
     public boolean deleteFriend(String username, String friendName) {
         User user = repository.findByUsername(username);
         User friend = repository.findByUsername(friendName);
-        if(user == null || friend == null)
+        if (user == null || friend == null)
             return false;
         List<User> friends = user.getFriends();
         friends.remove(friend);

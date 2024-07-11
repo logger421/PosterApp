@@ -1,6 +1,7 @@
 package org.logger421.poster.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.logger421.poster.actions.PostRequestAction;
 import org.logger421.poster.dto.PostDTO;
 import org.logger421.poster.models.Comment;
 import org.logger421.poster.models.Post;
@@ -8,7 +9,6 @@ import org.logger421.poster.models.User;
 import org.logger421.poster.repositiories.CommentRepository;
 import org.logger421.poster.repositiories.PostRepository;
 import org.logger421.poster.repositiories.UserRepository;
-import org.logger421.poster.actions.PostRequestAction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post getPostById(long id);
+
     List<Post> getByAuthor(User author);
 }

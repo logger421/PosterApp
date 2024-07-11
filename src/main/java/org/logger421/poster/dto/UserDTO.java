@@ -1,7 +1,9 @@
 package org.logger421.poster.dto;
 
-import lombok.*;
-import org.logger421.poster.models.Role;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
