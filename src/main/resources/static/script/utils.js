@@ -19,9 +19,5 @@ export function setEventListener(objectId, eventListener) {
 }
 
 export function getWindowLocation() {
-    return window.location.origin + getContextPath();
-}
-
-export function getContextPath() {
-    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))
+    return window.location.origin;
 }
